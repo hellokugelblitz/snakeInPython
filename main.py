@@ -18,19 +18,34 @@ def coordinate(x):
 def handle_movement(event, update_value_x, update_value_y):
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_RIGHT:
-            update_value_x = 1
-            update_value_y = 0
+            #If we arent already moving left
+            if update_value_x != -1:
+                update_value_x = 1
+                update_value_y = 0
         if event.key == pygame.K_LEFT:
-            update_value_x = -1
-            update_value_y = 0
+            #If we arent already moving right
+            if update_value_x != 1:
+                update_value_x = -1
+                update_value_y = 0
         if event.key == pygame.K_UP:
-            update_value_y = -1
-            update_value_x = 0
+            #If we arent already moving down
+            if update_value_y != 1:
+                update_value_y = -1
+                update_value_x = 0
         if event.key == pygame.K_DOWN:
-            update_value_y = 1
-            update_value_x = 0
+            #If we arent already moving up
+            if update_value_y != -1:
+                update_value_y = 1
+                update_value_x = 0
     return update_value_x, update_value_y
     
+def is_same_position(position_1, position_2):
+    if position_1 == position_2:
+        return True
+    else:
+        return False
+
+
 def main():
     # Run until the user asks to quit
     running = True
@@ -74,12 +89,15 @@ def main():
         SNAKE_X += update_value_x
         SNAKE_Y += update_value_y
 
-        # if(coordinate(SNAKE_X) > coordinate(20)):
-        #     SNAKE_X = 0
-        #     update_value_x = -update_value_x
-        # if(coordinate(SNAKE_X) < coordinate(-1)):
-        #     SNAKE_X = coordinate(20)
-        #     update_value_x = -update_value_x
+        if(coordinate(SNAKE_X) == coordinate(20)):
+            SNAKE_X = 0
+        if(coordinate(SNAKE_X) == coordinate(-1)):
+            SNAKE_X = 20
+
+        if(coordinate(SNAKE_Y) == coordinate(20)):
+            SNAKE_Y = 0
+        if(coordinate(SNAKE_Y) == coordinate(-1)):
+            SNAKE_Y = 20
 
         snake.append((SNAKE_X,SNAKE_Y))
 
